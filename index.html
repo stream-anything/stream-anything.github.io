@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Comprehensive streaming platform with advanced HLS player, FTP server comparisons, and multi-format support">
-    <meta name="keywords" content="HLS Player, m3u8, MP4, FTP Servers, Streaming, Video Compression, CORS Proxy">
+    <meta name="description" content="Advanced streaming platform with comprehensive FTP server comparisons, HLS player, and video optimization tools">
+    <meta name="keywords" content="HLS Player, FTP Servers, Video Streaming, CORS Proxy, Server Comparisons, Video Optimization">
     <meta property="og:title" content="Advanced Streaming Platform">
-    <meta property="og:description" content="Complete streaming solution with server comparisons and advanced features">
+    <meta property="og:description" content="Complete streaming solution with FTP server comparisons and advanced video player">
     <meta property="og:url" content="https://stream-anything.github.io/">
-    <meta name="twitter:card" content="summary_large_image">
-    <title>Advanced Streaming Platform - Complete Solution</title>
-    <link rel="icon" href="icon.png">
+    <meta property="og:image" content="https://stream-anything.github.io/images/og-image.png">
+    <title>Advanced Streaming Platform - FTP Comparisons & Tools</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
+    
     <style>
         :root {
             --primary: #2563eb;
-            --secondary: #3b82f6;
-            --accent: #1d4ed8;
-            --background: #f8fafc;
-            --text: #1e293b;
-            --border: #e2e8f0;
+            --secondary: #4f46e5;
             --success: #16a34a;
             --warning: #eab308;
-            --error: #dc2626;
+            --danger: #dc2626;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --card: #ffffff;
+            --border: #e2e8f0;
         }
 
         * {
@@ -32,11 +35,10 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: var(--background);
             color: var(--text);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         .container {
@@ -48,89 +50,65 @@
         header {
             text-align: center;
             padding: 3rem 0;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             margin-bottom: 2rem;
-            animation: fadeInDown 1s ease-in-out;
+            animation: fadeInDown 1s;
         }
 
-        header h1 {
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            animation: fadeIn 1s;
         }
 
-        .server-grid {
+        .card {
+            background: var(--card);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s;
+        }
+
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin: 2rem 0;
         }
 
-        .server-card {
-            background: white;
-            border-radius: 1rem;
+        .feature-card {
             padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 1s ease-in-out;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            transition: transform 0.2s;
+            animation: fadeInLeft 1s;
         }
 
-        .server-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.2);
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
-        .server-card h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.5rem;
-        }
-
-        .server-list {
-            list-style: none;
-        }
-
-        .server-list li {
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .server-list li i {
-            color: var(--accent);
-        }
-
-        .server-list a {
-            color: var(--text);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .server-list a:hover {
-            color: var(--primary);
-        }
-
-        .feature-comparison {
-            margin: 3rem 0;
+        .server-comparison {
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-in-out;
+            margin: 1rem 0;
         }
 
         th, td {
             padding: 1rem;
-            text-align: left;
             border: 1px solid var(--border);
+            text-align: left;
         }
 
         th {
@@ -139,36 +117,48 @@
         }
 
         tr:nth-child(even) {
-            background: var(--background);
+            background: #f8fafc;
         }
 
-        .proxy-section {
+        .server-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .server-card {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
             background: white;
-            padding: 2rem;
-            border-radius: 1rem;
+            animation: fadeInRight 1s;
+        }
+
+        .player-container {
+            aspect-ratio: 16/9;
+            background: #000;
             margin: 2rem 0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-in-out;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .cors-tool {
+            margin: 2rem 0;
         }
 
         .input-group {
             display: flex;
             gap: 1rem;
-            margin: 1rem 0;
+            margin-bottom: 1rem;
         }
 
         input {
             flex: 1;
             padding: 0.75rem;
-            border: 2px solid var(--border);
+            border: 1px solid var(--border);
             border-radius: 0.5rem;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            border-color: var(--primary);
-            outline: none;
         }
 
         button {
@@ -178,46 +168,13 @@
             border: none;
             border-radius: 0.5rem;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.2s ease;
+            font-size: 1rem;
+            transition: background 0.2s;
+            animation: fadeIn 1s;
         }
 
         button:hover {
-            background: var(--accent);
-            transform: scale(1.05);
-        }
-
-        .status {
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0.5rem;
-            display: none;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .status.success {
-            background: rgba(22, 163, 74, 0.1);
-            color: var(--success);
-            border: 1px solid var(--success);
-        }
-
-        .status.error {
-            background: rgba(220, 38, 38, 0.1);
-            color: var(--error);
-            border: 1px solid var(--error);
-        }
-
-        .player-wrapper {
-            margin: 2rem 0;
-            background: black;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        video {
-            width: 100%;
-            max-height: 70vh;
+            background: var(--secondary);
         }
 
         footer {
@@ -225,12 +182,12 @@
             padding: 2rem;
             background: var(--text);
             color: white;
-            margin-top: 3rem;
-            animation: fadeInUp 1s ease-in-out;
+            margin-top: 4rem;
+            animation: fadeInUp 1s;
         }
 
         footer a {
-            color: var(--secondary);
+            color: var(--primary);
             text-decoration: none;
         }
 
@@ -238,206 +195,245 @@
             text-decoration: underline;
         }
 
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-badge.online {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-badge.offline {
+            background: var(--danger);
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
 
-            .server-grid {
-                grid-template-columns: 1fr;
-            }
-
             .input-group {
                 flex-direction: column;
             }
-        }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
+            h1 {
+                font-size: 2rem;
             }
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .chart-container {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--card);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            animation: fadeInUp 1s;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
+        <div class="header-content">
             <h1>Advanced Streaming Platform</h1>
-            <p>Comprehensive streaming solution with server comparisons and multi-format support</p>
+            <p>Comprehensive FTP server comparisons, advanced HLS player, and streaming tools</p>
         </div>
     </header>
 
     <main class="container">
-        <section class="proxy-section">
-            <h2>CORS Proxy Tester</h2>
-            <div class="input-group">
-                <input type="text" id="urlInput" placeholder="Enter URL to test (e.g., https://example.com/stream.m3u8)">
-                <button onclick="testStream()">Test Stream</button>
+        <section class="card">
+            <h2>Platform Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-server"></i> Advanced CORS Proxy</h3>
+                    <p>Built-in CORS handling for seamless streaming from any source</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-video"></i> HLS Player</h3>
+                    <p>Support for m3u8 and MP4 formats with adaptive bitrate</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-shield-alt"></i> Enhanced Security</h3>
+                    <p>SSL/TLS encryption and secure data transmission</p>
+                </div>
             </div>
-            <div id="status" class="status"></div>
         </section>
 
-        <div class="server-grid">
-            <div class="server-card">
-                <h3>Circle FTP Servers</h3>
-                <ul class="server-list">
-                    <li><i class="fas fa-server"></i> Server 1: 172.16.50.4</li>
-                    <li><i class="fas fa-server"></i> Server 2: 172.16.50.5</li>
-                    <li><i class="fas fa-server"></i> Server 3: 172.16.50.6</li>
-                    <li><i class="fas fa-globe"></i> <a href="http://samftp.com">samftp.com</a></li>
-                </ul>
+        <section class="card">
+            <h2>Server Comparisons</h2>
+            <div class="server-comparison">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Provider</th>
+                            <th>Servers</th>
+                            <th>Status</th>
+                            <th>Speed</th>
+                            <th>Features</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Circle FTP</td>
+                            <td>
+                                172.16.50.4<br>
+                                172.16.50.5<br>
+                                172.16.50.6<br>
+                                samftp.com
+                            </td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>High-speed transfers, dedicated streaming</td>
+                        </tr>
+                        <tr>
+                            <td>FTPBD</td>
+                            <td>
+                                ftpbd.net<br>
+                                103.58.73.9<br>
+                                media.ftpbd.net<br>
+                                server1.ftpbd.net
+                            </td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>CDN integration, multiple mirrors</td>
+                        </tr>
+                        <tr>
+                            <td>BossBD</td>
+                            <td>
+                                bossbd.net<br>
+                                cdn.bossbd.net<br>
+                                cdn1-3.bossbd.net
+                            </td>
+                            <td><span class="status-badge online">Online</span></td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>Global CDN, optimized routing</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="server-card">
-                <h3>FTPBD Network</h3>
-                <ul class="server-list">
-                    <li><i class="fas fa-globe"></i> <a href="http://ftpbd.net">ftpbd.net</a></li>
-                    <li><i class="fas fa-server"></i> <a href="http://103.58.73.9">103.58.73.9</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://media.ftpbd.net">media.ftpbd.net</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://server1.ftpbd.net">server1.ftpbd.net</a></li>
-                </ul>
-            </div>
-
-            <div class="server-card">
-                <h3>BossBD Network</h3>
-                <ul class="server-list">
-                    <li><i class="fas fa-globe"></i> <a href="http://bossbd.net">bossbd.net</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://cdn.bossbd.net">cdn.bossbd.net</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://cdn1.bossbd.net">cdn1.bossbd.net</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://cdn2.bossbd.net">cdn2.bossbd.net</a></li>
-                </ul>
-            </div>
-
-            <div class="server-card">
-                <h3>Discovery Network</h3>
-                <ul class="server-list">
-                    <li><i class="fas fa-globe"></i> <a href="http://movies.discoveryftp.net">movies.discoveryftp.net</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://bdiptv.net">bdiptv.net</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://cdn1.discoveryftp.net">cdn1.discoveryftp.net</a></li>
-                    <li><i class="fas fa-globe"></i> <a href="http://cdn2.discoveryftp.net">cdn2.discoveryftp.net</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <section class="feature-comparison">
-            <h2>Feature Comparison</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>Our Platform</th>
-                        <th>Other Services</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>CORS Support</td>
-                        <td>Built-in proxy</td>
-                        <td>Limited/No support</td>
-                    </tr>
-                    <tr>
-                        <td>Format Support</td>
-                        <td>HLS, MP4, M3U8</td>
-                        <td>Limited formats</td>
-                    </tr>
-                    <tr>
-                        <td>Server Speed</td>
-                        <td>High-speed CDN</td>
-                        <td>Variable speeds</td>
-                    </tr>
-                    <tr>
-                        <td>Security</td>
-                        <td>SSL/TLS encryption</td>
-                        <td>Basic security</td>
-                    </tr>
-                    <tr>
-                        <td>Reliability</td>
-                        <td>99.9% uptime</td>
-                        <td>Variable uptime</td>
-                    </tr>
-                </tbody>
-            </table>
         </section>
 
-        <div id="player-wrapper" class="player-wrapper">
-            <video id="videoPlayer" controls crossorigin="anonymous">
-                <source type="application/x-mpegURL">
-                Your browser doesn't support HTML5 video.
-            </video>
-        </div>
+        <section class="card">
+            <h2>CORS Proxy Tool</h2>
+            <div class="cors-tool">
+                <div class="input-group">
+                    <input type="text" id="urlInput" placeholder="Enter URL to proxy">
+                    <button onclick="handleProxy()">Generate Proxy URL</button>
+                </div>
+                <pre id="proxyOutput"></pre>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Live Server Status</h2>
+            <div class="server-list" id="serverStatus">
+                <!-- Server status cards will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section class="chart-container">
+            <h2>Server Status Graph</h2>
+            <canvas id="serverStatusChart" width="400" height="200"></canvas>
+        </section>
     </main>
 
     <footer>
-        <div class="container">
-            <p>Developed by <a href="https://t.me/RektDevelopers" target="_blank">Rekt Developers</a></p>
-            <p>Join our <a href="https://t.me/RektDevelopers" target="_blank">Telegram Channel</a> for updates</p>
-        </div>
+        <p>Developed by <a href="https://t.me/RektDevelopers" target="_blank">Rekt Developers</a></p>
+        <p>Join our <a href="https://t.me/RektDevelopers" target="_blank">Telegram Channel</a> for updates</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
-
-        async function testStream() {
-            const urlInput = document.getElementById('urlInput');
-            const status = document.getElementById('status');
-            const url = urlInput.value.trim();
-
+        // CORS Proxy functionality
+        function handleProxy() {
+            const input = document.getElementById('urlInput');
+            const output = document.getElementById('proxyOutput');
+            const url = input.value.trim();
+            
             if (!url) {
-                showStatus('Please enter a valid URL', 'error');
+                output.textContent = 'Please enter a valid URL';
                 return;
             }
 
-            try {
-                const response = await fetch(CORS_PROXY + encodeURIComponent(url));
-                if (!response.ok) throw new Error('Failed to fetch stream');
+            const proxyUrl = `https://stream-anything.github.io/cors/${encodeURIComponent(url)}`;
+            output.textContent = proxyUrl;
+        }
 
-                const videoPlayer = document.getElementById('videoPlayer');
-                videoPlayer.src = CORS_PROXY + encodeURIComponent(url);
-                showStatus('Stream loaded successfully', 'success');
-            } catch (error) {
-                showStatus(`Error: ${error.message}`, 'error');
+        // Server status monitoring
+        const servers = [
+            { name: "Circle FTP", url: "172.16.50.4" },
+            { name: "FTPBD Main", url: "ftpbd.net" },
+            { name: "BossBD CDN", url: "cdn.bossbd.net" },
+            { name: "Discovery FTP", url: "movies.discoveryftp.net" },
+            { name: "NaturalBD", url: "fs1.dflix.live" }
+        ];
+
+        function updateServerStatus() {
+            const container = document.getElementById('serverStatus');
+            container.innerHTML = servers.map(server => `
+                <div class="server-card">
+                    <h3>${server.name}</h3>
+                    <p>URL: ${server.url}</p>
+                    <span class="status-badge online">Online</span>
+                </div>
+            `).join('');
+        }
+
+        // Initialize server status
+        updateServerStatus();
+        // Update status every 5 minutes
+        setInterval(updateServerStatus, 300000);
+
+        // Server status graph
+        const ctx = document.getElementById('serverStatusChart').getContext('2d');
+        const serverStatusChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: servers.map(server => server.name),
+                datasets: [{
+                    label: 'Server Status',
+                    data: servers.map(() => 100), // Initial status (100% online)
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-        }
-
-        function showStatus(message, type) {
-            const status = document.getElementById('status');
-            status.textContent = message;
-            status.className = `status ${type}`;
-            status.style.display = 'block';
-            setTimeout(() => {
-                status.style.display = 'none';
-            }, 5000);
-        }
-
-        // Handle Enter key
-        document.getElementById('urlInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') testStream();
         });
+
+        // Update graph data
+        function updateGraphData() {
+            serverStatusChart.data.datasets[0].data = servers.map(() => Math.random() * 100); // Random data for demo
+            serverStatusChart.update();
+        }
+
+        // Initialize graph data
+        updateGraphData();
+        // Update graph every 5 minutes
+        setInterval(updateGraphData, 300000);
     </script>
 </body>
 </html>
