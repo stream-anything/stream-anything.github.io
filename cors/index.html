@@ -322,18 +322,7 @@
                 showLoading(true);
                 outputContainer.textContent = '';
 
-                const payload = {
-                    url: encodeURIComponent(url),
-                    timestamp: Date.now()
-                };
-
-                const response = await fetch(`https://stream-anything.github.io/cors/index.html?url=${payload.url}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+                const response = await fetch(`https://stream-anything.github.io/cors/index.html?url=${encodeURIComponent(url)}`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -367,13 +356,6 @@
                 showStatus('Failed to copy content', 'error');
             }
         }
-
-        // Handle Enter key press
-        document.getElementById('urlInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                fetchData();
-            }
-        });
     </script>
 </body>
 </html>
