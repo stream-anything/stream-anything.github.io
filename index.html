@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stream Anything - HLS Player</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Arial', sans-serif;
+    }
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      text-align: center;
+    }
+    .form-control, .btn {
+      border-radius: 8px;
+    }
+    .btn-primary {
+      background-color: #4caf50;
+      border-color: #4caf50;
+    }
+    .btn-primary:hover {
+      background-color: #45a049;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      text-align: center;
+      color: #bbb;
+    }
+    footer a {
+      color: #4caf50;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Stream Anything</h1>
+    <p>Enter the URL of the video you want to stream (HLS, MP4, or others).</p>
+    <form id="stream-form">
+      <input 
+        type="url" 
+        id="stream-url" 
+        class="form-control mb-3" 
+        placeholder="Enter video URL (e.g., .m3u8, .mp4)" 
+        required
+      >
+      <button type="submit" class="btn btn-primary w-100">Play Video</button>
+    </form>
+  </div>
+  <footer>
+    <p>Powered by <a href="https://t.me/RektDevelopers" target="_blank"><i class="fab fa-telegram"></i> Rekt Developers</a></p>
+  </footer>
+  <script>
+    const form = document.getElementById('stream-form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const url = document.getElementById('stream-url').value;
+      if (url) {
+        window.location.href = `play.html?url=${encodeURIComponent(url)}`;
+      } else {
+        alert('Please enter a valid URL!');
+      }
+    });
+  </script>
+</body>
+</html>
