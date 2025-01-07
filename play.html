@@ -1,113 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stream Video - HLS Player</title>
-  <link rel="stylesheet" href="https://vjs.zencdn.net/7.24.1/video-js.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    .player-container {
-      width: 90%;
-      max-width: 800px;
-    }
-    .btn-back {
-      margin-top: 20px;
-      text-align: center;
-      padding: 10px 20px;
-      background-color: #4caf50;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      text-decoration: none;
-    }
-    .btn-back:hover {
-      background-color: #45a049;
-    }
-    footer {
-      margin-top: 20px;
-      font-size: 14px;
-      text-align: center;
-      color: #bbb;
-    }
-    footer a {
-      color: #4caf50;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="player-container">
-    <video
-      id="hls-player"
-      class="video-js vjs-default-skin vjs-big-play-centered"
-      controls
-      preload="auto"
-      width="100%"
-      height="400"
-      data-setup='{}'
-    ></video>
-  </div>
-  <a href="index.html" class="btn-back">Back to Home</a>
-  <footer>
-    <p>Powered by <a href="https://t.me/RektDevelopers" target="_blank"><i class="fab fa-telegram"></i> Rekt Developers</a></p>
-  </footer>
-
-  <script src="https://vjs.zencdn.net/7.24.1/video.min.js"></script>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const videoUrl = params.get('url');
-
-    if (videoUrl) {
-      // Initialize Video.js
-      const player = videojs('hls-player', {
-        autoplay: true,
-        controls: true,
-        responsive: true,
-        fluid: true,
-        sources: [
-          {
-            src: videoUrl,
-            type: videoUrl.endsWith('.m3u8') ? 'application/x-mpegURL' : 'video/mp4',
-          },
-        ],
-      });
-
-      // Fix CORS issues
-      player.ready(() => {
-        const xhr = player.tech(true).vhs?.xhr || player.tech(true).hls?.xhr;
-        if (xhr) {
-          xhr.beforeRequest = (options) => {
-            options.headers = {
-              'Authorization': 'Bearer YOUR_TOKEN_HERE', // Optional Payload
-              'Custom-Header': 'CustomValue',
-            };
-            options.uri = `https://corsproxy.io/?${encodeURIComponent(options.uri)}`;
-            return options;
-          };
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Watch your video stream with our advanced player. Supports HLS and MP4 streaming for smooth, high-quality playback.">
+    <meta name="keywords" content="HLS Player, Stream Video, MP4, Live Streaming, Adaptive Bitrate, Video Player">
+    <meta property="og:title" content="Advanced Video Streaming Player">
+    <meta property="og:description" content="Effortlessly stream videos with HLS and MP4 support. Adaptive streaming for the best video quality.">
+    <meta property="og:image" content="path_to_image.jpg">
+    <meta property="og:url" content="https://stream-anything.github.io/play.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced Video Streaming Player">
+    <meta name="twitter:description" content="Stream live and on-demand videos with our adaptive, high-performance player.">
+    <meta name="twitter:image" content="path_to_image.jpg">
+    <title>Stream Video - Advanced HLS Player</title>
+    <link rel="icon" href="icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css/animate.min.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/video.js/dist/video.min.js" async></script>
+    <script>
+        // Initialize video player with URL from payload
+        function initializePlayer(payload) {
+            const player = videojs('videoPlayer');
+            if (payload.streamUrl) {
+                player.src({
+                    type: 'application/x-mpegURL',
+                    src: payload.streamUrl,
+                });
+                player.play();
+            } else {
+                alert('No stream URL provided in the payload.');
+            }
         }
-      });
-    } else {
-      alert('No video URL provided!');
-      window.location.href = 'index.html';
-    }
-  </script>
+
+        // Example payload with stream URL
+        const payload = {
+            streamUrl: 'https://example.com/your-stream.m3u8',  // Replace with actual stream URL
+        };
+
+        window.onload = function() {
+            initializePlayer(payload);
+        };
+    </script>
+</head>
+
+<body>
+
+    <header class="animate__animated animate__fadeIn">
+        <h1>Watch Your Video Stream</h1>
+        <p>Streaming content with our advanced HLS player. Enjoy smooth, high-quality video playback.</p>
+    </header>
+
+    <section>
+        <h2>Video Player</h2>
+        <div class="video-container">
+            <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto">
+                <source src="" type="application/x-mpegURL">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <footer class="animate__animated animate__fadeIn">
+        <p>Powered by <a href="https://t.me/RektDevelopers" target="_blank" rel="noopener noreferrer">RektDevelopers</a></p>
+    </footer>
+
 </body>
+
 </html>
