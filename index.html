@@ -1,133 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Stream anything with our advanced HLS player. Compare top streaming solutions, video compression methods, and FTP servers for superior video quality.">
-    <meta name="keywords" content="HLS Player, m3u8, MP4, Streaming, Video Player, FTP Servers, Compression Methods, Video Streaming, Advanced Video Player, Comparison">
-    <meta property="og:title" content="Advanced HLS Streaming Player">
-    <meta property="og:description" content="Effortless video streaming with our modern HLS player. Supports m3u8 and MP4 formats.">
-    <meta property="og:image" content="path_to_image.jpg">
+    <meta name="description" content="Comprehensive streaming platform with advanced HLS player, FTP server comparisons, and multi-format support">
+    <meta name="keywords" content="HLS Player, m3u8, MP4, FTP Servers, Streaming, Video Compression, CORS Proxy">
+    <meta property="og:title" content="Advanced Streaming Platform">
+    <meta property="og:description" content="Complete streaming solution with server comparisons and advanced features">
     <meta property="og:url" content="https://stream-anything.github.io/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Advanced HLS Streaming Player">
-    <meta name="twitter:description" content="Stream m3u8, MP4, and more with our responsive, advanced video player. Compare top compression methods and streaming solutions.">
-    <meta name="twitter:image" content="path_to_image.jpg">
-    <title>Stream Anything - Advanced HLS Streaming Player</title>
+    <title>Advanced Streaming Platform - Complete Solution</title>
     <link rel="icon" href="icon.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css/animate.min.css">
-    <link rel="stylesheet" href="styles.min.css">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/video.js/dist/video.min.js" as="script">
-    <script src="https://cdn.jsdelivr.net/npm/video.js/dist/video.min.js" async></script>
-    <script>
-        // Fixing CORS issues dynamically
-        function fixCORS(url) {
-            let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            return proxyUrl + url;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #3b82f6;
+            --accent: #1d4ed8;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --warning: #eab308;
+            --error: #dc2626;
         }
 
-        // Function to handle stream load with payload
-        function loadStream(payload) {
-            let streamUrl = payload.streamUrl;  // Ensure payload contains streamUrl
-            if (streamUrl) {
-                document.getElementById('videoPlayer').src = fixCORS(streamUrl);
-            } else {
-                alert('Stream URL is missing in payload');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .server-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .server-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .server-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        .server-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .server-list {
+            list-style: none;
+        }
+
+        .server-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .server-list li i {
+            color: var(--accent);
+        }
+
+        .server-list a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .server-list a:hover {
+            color: var(--primary);
+        }
+
+        .feature-comparison {
+            margin: 3rem 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: var(--background);
+        }
+
+        .proxy-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .status {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .status.success {
+            background: rgba(22, 163, 74, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .status.error {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .player-wrapper {
+            margin: 2rem 0;
+            background: black;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        video {
+            width: 100%;
+            max-height: 70vh;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--text);
+            color: white;
+            margin-top: 3rem;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .server-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group {
+                flex-direction: column;
             }
         }
-    </script>
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-    <header class="animate__animated animate__fadeIn">
-        <h1>Stream Anything with Our Advanced HLS Player</h1>
-        <p>Compare our player with top streaming solutions and video compression methods for superior performance and quality.</p>
+    <header>
+        <div class="container">
+            <h1>Advanced Streaming Platform</h1>
+            <p>Comprehensive streaming solution with server comparisons and multi-format support</p>
+        </div>
     </header>
 
-    <section class="animate__animated animate__fadeIn">
-        <h2>Why Our HLS Player is the Best</h2>
-        <p>We’ve developed an **advanced HLS player** that is optimized for smooth, high-quality streaming, offering features that set us apart from all other compression and streaming solutions:</p>
-        
-        <h3>1. **CORS Handling for Smooth Streaming**</h3>
-        <p>Our player includes a **dynamic CORS fix** that automatically resolves CORS issues when streaming from external servers, ensuring smooth playback without additional configuration.</p>
-        
-        <h3>2. **Multi-Format Support (HLS & MP4)**</h3>
-        <p>Stream **m3u8** (HLS) and **MP4** formats seamlessly, offering flexibility and compatibility with various video sources, unlike many players that are limited to specific formats.</p>
+    <main class="container">
+        <section class="proxy-section">
+            <h2>CORS Proxy Tester</h2>
+            <div class="input-group">
+                <input type="text" id="urlInput" placeholder="Enter URL to test (e.g., https://example.com/stream.m3u8)">
+                <button onclick="testStream()">Test Stream</button>
+            </div>
+            <div id="status" class="status"></div>
+        </section>
 
-        <h3>3. **Adaptive Bitrate and Low Latency**</h3>
-        <p>Enjoy **adaptive bitrate** streaming, allowing automatic adjustment of video quality based on network conditions, ensuring **minimal buffering** and **low-latency** playback for a smooth experience.</p>
+        <div class="server-grid">
+            <div class="server-card">
+                <h3>Circle FTP Servers</h3>
+                <ul class="server-list">
+                    <li><i class="fas fa-server"></i> Server 1: 172.16.50.4</li>
+                    <li><i class="fas fa-server"></i> Server 2: 172.16.50.5</li>
+                    <li><i class="fas fa-server"></i> Server 3: 172.16.50.6</li>
+                    <li><i class="fas fa-globe"></i> <a href="http://samftp.com">samftp.com</a></li>
+                </ul>
+            </div>
 
-        <h3>4. **Fully Responsive Design**</h3>
-        <p>Our player works flawlessly across all devices — mobile, tablet, desktop — ensuring **consistent user experience** with **adaptive layout** and **responsive controls**.</p>
+            <div class="server-card">
+                <h3>FTPBD Network</h3>
+                <ul class="server-list">
+                    <li><i class="fas fa-globe"></i> <a href="http://ftpbd.net">ftpbd.net</a></li>
+                    <li><i class="fas fa-server"></i> <a href="http://103.58.73.9">103.58.73.9</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://media.ftpbd.net">media.ftpbd.net</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://server1.ftpbd.net">server1.ftpbd.net</a></li>
+                </ul>
+            </div>
 
-        <h3>5. **Optimized for High-Quality Playback**</h3>
-        <p>Our player ensures **crystal-clear video quality** by optimizing content delivery, even over slow connections, without sacrificing quality. Other players often struggle with low video quality or buffering issues.</p>
+            <div class="server-card">
+                <h3>BossBD Network</h3>
+                <ul class="server-list">
+                    <li><i class="fas fa-globe"></i> <a href="http://bossbd.net">bossbd.net</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://cdn.bossbd.net">cdn.bossbd.net</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://cdn1.bossbd.net">cdn1.bossbd.net</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://cdn2.bossbd.net">cdn2.bossbd.net</a></li>
+                </ul>
+            </div>
 
-        <h3>6. **Security and Privacy**</h3>
-        <p>All streams are delivered securely via **HTTPS**, and we ensure **data privacy** by using modern security protocols. Other services may expose your content to risks due to insecure connections.</p>
-    </section>
+            <div class="server-card">
+                <h3>Discovery Network</h3>
+                <ul class="server-list">
+                    <li><i class="fas fa-globe"></i> <a href="http://movies.discoveryftp.net">movies.discoveryftp.net</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://bdiptv.net">bdiptv.net</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://cdn1.discoveryftp.net">cdn1.discoveryftp.net</a></li>
+                    <li><i class="fas fa-globe"></i> <a href="http://cdn2.discoveryftp.net">cdn2.discoveryftp.net</a></li>
+                </ul>
+            </div>
+        </div>
 
-    <section class="animate__animated animate__fadeIn">
-        <h2>FTP Server Comparison</h2>
-        <p>Here’s how our **FTP server setup** compares to others in terms of features, speed, security, and reliability:</p>
+        <section class="feature-comparison">
+            <h2>Feature Comparison</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Our Platform</th>
+                        <th>Other Services</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CORS Support</td>
+                        <td>Built-in proxy</td>
+                        <td>Limited/No support</td>
+                    </tr>
+                    <tr>
+                        <td>Format Support</td>
+                        <td>HLS, MP4, M3U8</td>
+                        <td>Limited formats</td>
+                    </tr>
+                    <tr>
+                        <td>Server Speed</td>
+                        <td>High-speed CDN</td>
+                        <td>Variable speeds</td>
+                    </tr>
+                    <tr>
+                        <td>Security</td>
+                        <td>SSL/TLS encryption</td>
+                        <td>Basic security</td>
+                    </tr>
+                    <tr>
+                        <td>Reliability</td>
+                        <td>99.9% uptime</td>
+                        <td>Variable uptime</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th>Stream Anything FTP</th>
-                    <th>FTP Server 1 (e.g., FileZilla)</th>
-                    <th>FTP Server 2 (e.g., vsftpd)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Speed</td>
-                    <td>Ultra-fast file transfers with optimized connection settings</td>
-                    <td>Good speed, may experience delays with large files</td>
-                    <td>Fast, but not optimized for large video files</td>
-                </tr>
-                <tr>
-                    <td>Security</td>
-                    <td>Supports modern encryption (TLS/SSL) for secure uploads/downloads</td>
-                    <td>Supports TLS, but vulnerable to some attacks</td>
-                    <td>Supports SSL, but limited configuration for security</td>
-                </tr>
-                <tr>
-                    <td>Reliability</td>
-                    <td>Consistently stable connections, even under high load</td>
-                    <td>Can drop connections with high traffic</td>
-                    <td>Relatively stable, but not as robust under heavy usage</td>
-                </tr>
-                <tr>
-                    <td>Ease of Setup</td>
-                    <td>Simple, automated setup with built-in configuration</td>
-                    <td>Easy setup, but may require additional manual configuration</td>
-                    <td>Requires more advanced configuration for optimal setup</td>
-                </tr>
-                <tr>
-                    <td>Compatibility</td>
-                    <td>Full compatibility with all modern FTP clients and streaming servers</td>
-                    <td>Limited compatibility with older FTP clients</td>
-                    <td>Works with most FTP clients, but not optimized for streaming</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+        <div id="player-wrapper" class="player-wrapper">
+            <video id="videoPlayer" controls crossorigin="anonymous">
+                <source type="application/x-mpegURL">
+                Your browser doesn't support HTML5 video.
+            </video>
+        </div>
+    </main>
 
-    <section class="animate__animated animate__fadeIn">
-        <h2>Load Stream via Payload</h2>
-        <p>To stream content, the player loads a URL dynamically from the **payload**. This enables flexibility for different stream sources.</p>
-        <button onclick="loadStream({streamUrl: 'https://example.com/your-stream.m3u8'})">Load Stream</button>
-    </section>
-
-    <footer class="animate__animated animate__fadeIn">
-        <p>Powered by <a href="https://t.me/RektDevelopers" target="_blank" rel="noopener noreferrer">RektDevelopers</a></p>
-        <p>Follow us on Telegram for updates: <a href="https://t.me/RektDevelopers" target="_blank" rel="noopener noreferrer">Telegram Channel</a></p>
+    <footer>
+        <div class="container">
+            <p>Developed by <a href="https://t.me/RektDevelopers" target="_blank">Rekt Developers</a></p>
+            <p>Join our <a href="https://t.me/RektDevelopers" target="_blank">Telegram Channel</a> for updates</p>
+        </div>
     </footer>
 
-</body>
+    <script>
+        const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
+        async function testStream() {
+            const urlInput = document.getElementById('urlInput');
+            const status = document.getElementById('status');
+            const url = urlInput.value.trim();
+
+            if (!url) {
+                showStatus('Please enter a valid URL', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(CORS_PROXY + encodeURIComponent(url));
+                if (!response.ok) throw new Error('Failed to fetch stream');
+
+                const videoPlayer = document.getElementById('videoPlayer');
+                videoPlayer.src = CORS_PROXY + encodeURIComponent(url);
+                showStatus('Stream loaded successfully', 'success');
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        }
+
+        // Handle Enter key
+        document.getElementById('urlInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') testStream();
+        });
+    </script>
+</body>
 </html>
